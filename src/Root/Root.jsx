@@ -1,8 +1,11 @@
+import Home from "../Pages/Home/Home";
+import Navbar from "../Shared/Navbar/Navbar";
 
 const Root = () => {
     return (
-        <div>
-            <h3>Main Layout</h3>
+        <div className="">
+            <Navbar />
+            <Home />
         </div>
     );
 };
