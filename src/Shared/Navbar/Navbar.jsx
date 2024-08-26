@@ -53,7 +53,7 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">
              {/* Large Device */}
             <li>
-              <a><NavLink to='/'>Home</NavLink></a>
+              <NavLink to='/'>Home</NavLink>
             </li>
             <li>
               <a>About</a>
@@ -77,7 +77,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link to='/authentication'><a className="btn">Button</a></Link>
+          <Link to='/authentication' className="btn">Button</Link>
         </div>
       </div>
     </div>
