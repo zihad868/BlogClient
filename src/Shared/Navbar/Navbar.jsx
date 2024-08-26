@@ -1,74 +1,86 @@
-import React, { useState } from 'react';
-import './styles.css'; // Make sure to import your CSS file
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const [showMenu, setShowMenu] = useState(false);
-
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
-  };
-
   return (
-    <header className="header">
-      <nav className="nav container">
-        <div className="nav__data">
-          <a href="#" className="nav__logo">
-            <i className="ri-planet-line"></i> Company
-          </a>
-          <div className="nav__toggle" id="nav-toggle" onClick={toggleMenu}>
-            <i className={`ri-menu-line nav__burger ${showMenu ? 'show-icon' : ''}`}></i>
-            <i className={`ri-close-line nav__close ${showMenu ? 'show-icon' : ''}`}></i>
+    <div>
+      <div className="navbar bg-base-200">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              {/* Small Device */}
+              <li>
+                <a>Item 5</a>
+              </li>
+              <li>
+                <a>Parent</a>
+                <ul className="p-2">
+                  <li>
+                    <a>Submenu 1</a>
+                  </li>
+                  <li>
+                    <a>Submenu 2</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a>Item 3</a>
+              </li>
+            </ul>
           </div>
+          <a className="text-xl">Marketing Blog</a>
         </div>
-        <div className={`nav__menu ${showMenu ? 'show-menu' : ''}`} id="nav-menu">
-          <ul className="nav__list">
-            <li><a href="#" className="nav__link"><i className="ri-home-line"></i> Home</a></li>
-            <li><a href="#" className="nav__link"><i className="ri-building-line"></i> Company</a></li>
-
-            <li className="dropdown__item">
-              <div className="nav__link">
-                <i className="ri-bar-chart-box-line"></i> Analytics <i className="ri-arrow-down-s-line dropdown__arrow"></i>
-              </div>
-              <ul className="dropdown__menu">
-                <li>
-                  <a href="#" className="dropdown__link">
-                    <i className="ri-pie-chart-line"></i> Overview
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="dropdown__link">
-                    <i className="ri-arrow-up-down-line"></i> Transactions
-                  </a>
-                </li>
-                <li className="dropdown__subitem">
-                  <div className="dropdown__link">
-                    <i className="ri-bar-chart-line"></i> Reports <i className="ri-add-line dropdown__add"></i>
-                  </div>
-                  <ul className="dropdown__submenu">
-                    <li><a href="#" className="dropdown__sublink"><i className="ri-file-list-line"></i> Documents</a></li>
-                    <li><a href="#" className="dropdown__sublink"><i className="ri-cash-line"></i> Payments</a></li>
-                    <li><a href="#" className="dropdown__sublink"><i className="ri-refund-2-line"></i> Refunds</a></li>
-                  </ul>
-                </li>
-              </ul>
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
+             {/* Large Device */}
+            <li>
+              <a><NavLink to='/'>Home</NavLink></a>
             </li>
-
-            <li><a href="#" className="nav__link"><i className="ri-shopping-cart-line"></i> Products</a></li>
-            <li className="dropdown__item">
-              <div className="nav__link">
-                <i className="ri-user-line"></i> Users <i className="ri-arrow-down-s-line dropdown__arrow"></i>
-              </div>
-              <ul className="dropdown__menu">
-                <li><a href="#" className="dropdown__link"><i className="ri-user-line"></i> Profiles</a></li>
-                <li><a href="#" className="dropdown__link"><i className="ri-lock-line"></i> Accounts</a></li>
-                <li><a href="#" className="dropdown__link"><i className="ri-message-3-line"></i> Messages</a></li>
-              </ul>
+            <li>
+              <a>About</a>
             </li>
-            <li><a href="#" className="nav__link"><i className="ri-contacts-line"></i> Contact</a></li>
+            <li>
+              <details>
+                <summary>Parent</summary>
+                <ul className="p-2">
+                  <li>
+                    <a>Submenu 1</a>
+                  </li>
+                  <li>
+                    <a>Submenu 2</a>
+                  </li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <a>Item 3</a>
+            </li>
           </ul>
         </div>
-      </nav>
-    </header>
+        <div className="navbar-end">
+          <Link to='/authentication'><a className="btn">Button</a></Link>
+        </div>
+      </div>
+    </div>
   );
 };
 
