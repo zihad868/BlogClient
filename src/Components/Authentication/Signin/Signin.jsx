@@ -26,11 +26,11 @@ const Signin = () => {
   
       const result = await response.json();
   
-      console.log(result);
-      const {message, success} = result;
+      const {message, success, jwtToken} = result;
 
         if(success){
           handleSuccess(message)
+          localStorage.setItem('authorization', `Bearer ${jwtToken}`);
           setTimeout(() => {
           navigate('/')
         }, 4000);
