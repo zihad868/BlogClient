@@ -1,15 +1,65 @@
 import { useForm } from "react-hook-form";
 import signUp from "../../../assets/Authentication/signUp.jpg";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import { handleError, handleSuccess } from "../../../utils";
+
 const Signup = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    const { password, password2, image } = data;
+    if (password !== password2) {
+      return handleError("Passwords do not match");
+    }
+
+    // Upload Image
+    const formData = new FormData();
+    formData.append("image", image[0]);
+
+    const imgbbURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_BB_API}`;
+    try {
+      const response = await fetch(imgbbURL, {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      const imageUrl = result?.data?.display_url;
+
+      if (!imageUrl) {
+        return handleError("Image upload failed");
+      }
+
+      const { name, email, password } = data;
+      const signupData = { name, email, password, image: imageUrl };
+
+      try {
+        const signupResponse = await axios.post(`${import.meta.env.VITE_BACKEND_API}/auth/signup`, signupData);
+
+        handleSuccess("Signup successful");
+        console.log(signupResponse.data);
+      } catch (error) {
+        if (error.response && error.response.status === 409) {
+          // If the status code is 409, user already exists
+          handleError("User already exists. Please try logging in.");
+        } else if (error.response && error.response.data) {
+          // Display the error message from the backend
+          handleError(error.response.data.message || "Signup failed");
+        } else {
+          handleError("An unexpected error occurred. Please try again.");
+        }
+      }
+    } catch (error) {
+      return handleError("Internal Server Error");
+    }
+  };
+
   return (
     <>
       <h1 className="text-center text-2xl font-bold text-sky-400 mt-8">
@@ -22,7 +72,7 @@ const Signup = () => {
 
         <div className="mt-15">
           <div className="text-xl text-center text-gray-500 uppercase mt-8">
-            signup with email and password
+            Signup with email and password
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -48,7 +98,7 @@ const Signup = () => {
               </label>
               <input
                 type="email"
-                placeholder="email"
+                placeholder="Email"
                 {...register("email", { required: true })}
                 className="input input-bordered"
               />
@@ -74,11 +124,28 @@ const Signup = () => {
 
             <div className="form-control">
               <label className="label">
+                <span className="label-text">Confirm Password</span>
+              </label>
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                {...register("password2", { required: true })}
+                className="input input-bordered"
+              />
+              {errors.password2 && (
+                <span className="text-red-400">
+                  Confirm Password field is required
+                </span>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label">
                 <span className="label-text">Upload Image</span>
               </label>
               <input
                 type="file"
-                class="file:border file:border-solid ..."
+                className="file:border file:border-solid ..."
                 {...register("image", { required: true })}
               />
               {errors.image && (
@@ -101,6 +168,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
