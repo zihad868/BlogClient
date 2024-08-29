@@ -1,8 +1,11 @@
 import { useForm } from "react-hook-form";
 import signIn from "../../../assets/Authentication/login.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { handleError, handleSuccess } from "../../../utils";
+import { ToastContainer } from "react-toastify";
 
 const Signin = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -10,7 +13,37 @@ const Signin = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    console.log("Submitting data:", data); // Log the data being sent
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/auth/signin`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+  
+      const result = await response.json();
+  
+      console.log(result);
+      const {message, success} = result;
+
+        if(success){
+          handleSuccess(message)
+          setTimeout(() => {
+          navigate('/')
+        }, 4000);
+        }
+        if(success === false){
+          handleError(message)
+        }
+
+    } catch (error) {
+      handleError('Internal Server Error');
+    }
+  };
+  
 
   return (
     <>
@@ -24,7 +57,7 @@ const Signin = () => {
 
         <div className="mt-15">
           <div className="text-xl text-center text-gray-500 uppercase mt-8">
-             Please Signin
+            Please Signin
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,7 +91,6 @@ const Signin = () => {
               )}
             </div>
 
-
             <input
               className="font-bold px-2 py-1 bg-sky-400 mt-3 rounded-lg w-full hover:bg-slate-400"
               type="submit"
@@ -74,6 +106,7 @@ const Signin = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

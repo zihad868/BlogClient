@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import signUp from "../../../assets/Authentication/signUp.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../../../utils";
@@ -43,26 +43,34 @@ const Signup = () => {
       const signupData = { name, email, password, image: imageUrl };
 
       try {
-        const signupResponse = await axios.post(
+        const signupResponse = await fetch(
           `${import.meta.env.VITE_BACKEND_API}/auth/signup`,
-          signupData
+          {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify(signupData)
+          }
         );
 
-        handleSuccess("Signup successful");
+        const result = await signupResponse.json();
+        
+        console.log(result)
+        const {message, success} = result;
 
-        setTimeout(() => {
+        if(success){
+          handleSuccess(message)
+          setTimeout(() => {
           navigate('/authentication/signin')
-        }, 3000);
-      } catch (error) {
-        if (error.response && error.response.status === 409) {
-          // If the status code is 409, user already exists
-          handleError("User already exists. Please try logging in.");
-        } else if (error.response && error.response.data) {
-          // Display the error message from the backend
-          handleError(error.response.data.message || "Signup failed");
-        } else {
-          handleError("An unexpected error occurred. Please try again.");
+        }, 4000);
         }
+        if(success === false){
+          handleError(message)
+        }
+        
+      } catch (error) {
+        console.log('Please try again')
       }
     } catch (error) {
       return handleError("Internal Server Error");
