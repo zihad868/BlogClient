@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
-const UserContext = createContext(null);
+export const UserContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [email, setEmail] = useState(null);
@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const userInfo = { email, loading };
-  console.log(email)
+  console.log(loading,email)
 
   return (
     <UserContext.Provider value={userInfo}>
