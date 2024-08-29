@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import signUp from "../../../assets/Authentication/signUp.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../../../utils";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -22,7 +23,9 @@ const Signup = () => {
     const formData = new FormData();
     formData.append("image", image[0]);
 
-    const imgbbURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_BB_API}`;
+    const imgbbURL = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_IMAGE_BB_API
+    }`;
     try {
       const response = await fetch(imgbbURL, {
         method: "POST",
@@ -40,10 +43,16 @@ const Signup = () => {
       const signupData = { name, email, password, image: imageUrl };
 
       try {
-        const signupResponse = await axios.post(`${import.meta.env.VITE_BACKEND_API}/auth/signup`, signupData);
+        const signupResponse = await axios.post(
+          `${import.meta.env.VITE_BACKEND_API}/auth/signup`,
+          signupData
+        );
 
         handleSuccess("Signup successful");
-        console.log(signupResponse.data);
+
+        setTimeout(() => {
+          navigate('/authentication/signin')
+        }, 3000);
       } catch (error) {
         if (error.response && error.response.status === 409) {
           // If the status code is 409, user already exists

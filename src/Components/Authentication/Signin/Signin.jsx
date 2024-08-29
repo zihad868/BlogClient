@@ -24,7 +24,7 @@ const Signin = () => {
 
         <div className="mt-15">
           <div className="text-xl text-center text-gray-500 uppercase mt-8">
-             signin with email and password
+             Please Signin
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
