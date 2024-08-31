@@ -5,6 +5,7 @@ export const UserContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [email, setEmail] = useState(null);
+  const [user, setUser] = useState({});
   const[loading, setLoading] = useState(true);
 
   useEffect(() => {
