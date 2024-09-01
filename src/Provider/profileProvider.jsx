@@ -34,7 +34,7 @@ const ProfileProvider = ({ children }) => {
   const { data: user = {}, isLoading, isError } = useQuery({
     queryKey: ["user"],
     queryFn: fetchUser,
-    enabled: !loading && !!email, // Runs only when loading is false and email is available
+    enabled: !loading && !!email,
   });
 
   const userProfile = { user, isLoading, isError };

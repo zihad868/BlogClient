@@ -3,8 +3,8 @@ import { UserContext } from "../../Provider/AuthProvider";
 import { UserProvider } from "../../Provider/profileProvider"; // Import UserProvider
 
 const Home = () => {
-  const { email, loading } = useContext(UserContext); // Optional: Get email and loading state from AuthProvider
-  const { user, isLoading, isError } = useContext(UserProvider); // Access user data from UserProvider
+  const { email, loading } = useContext(UserContext); 
+  const { user, isLoading, isError } = useContext(UserProvider); 
 
   // Handle loading and error states
 

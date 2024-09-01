@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     }
     
-  }, []);
+  }, [email]);
 
   const userInfo = { email, loading };
   console.log(loading,email)

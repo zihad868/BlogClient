@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { UserProvider } from "../../Provider/profileProvider";
 
 const Navbar = () => {
+  const { user, isLoading, isError } = useContext(UserProvider);
+
+  const nav = (
+    <div className="mr-5">
+      <NavLink className="mr-5" to="/">
+        Home
+      </NavLink>
+      <NavLink className="mr-5" to="/">
+        About
+      </NavLink>
+      <NavLink className="mr-5" to="/">
+        Contact
+      </NavLink>
+    </div>
+  );
   return (
     <div>
       <div className="navbar bg-base-200">
@@ -28,56 +44,29 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               {/* Small Device */}
-              <li>
-                <a>Item 5</a>
-              </li>
-              <li>
-                <a>Parent</a>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a>Item 3</a>
-              </li>
+              {nav}
             </ul>
           </div>
           <a className="text-xl">Marketing Blog</a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-             {/* Large Device */}
-            <li>
-              <NavLink to='/'>Home</NavLink>
-            </li>
-            <li>
-              <a>About</a>
-            </li>
-            <li>
-              <details>
-                <summary>Parent</summary>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
+            {/* Large Device */}
+            {nav}
           </ul>
         </div>
         <div className="navbar-end">
-          <Link to='/authentication' className="btn">Button</Link>
+          {user.userInformation?.name ? (
+            <>
+            <Link to="/dashboard" className="btn">
+              Dashboard
+            </Link>
+            </>
+          ) : (
+            <Link to="/authentication" className="btn">
+              Sign In
+            </Link>
+          )}
         </div>
       </div>
     </div>

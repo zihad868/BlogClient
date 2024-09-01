@@ -33,6 +33,8 @@ const Signin = () => {
           localStorage.setItem('authorization', `Bearer ${jwtToken}`);
           setTimeout(() => {
           navigate('/')
+          // Reload The page
+          window.location.reload();
         }, 4000);
         }
         if(success === false){

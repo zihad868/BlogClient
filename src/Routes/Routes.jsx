@@ -6,6 +6,7 @@ import Home from "../Pages/Home/Home";
 import Authentication from "../Components/Authentication/Authentication";
 import Signin from "../Components/Authentication/Signin/Signin";
 import Signup from "../Components/Authentication/Signup/Signup";
+import Dashboard from "../Pages/DashBoard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -31,8 +32,12 @@ const router = createBrowserRouter([
           }
         ]
       }
-    ]
+    ],
   },
+  {
+    path: '/dashboard',
+    element: <Dashboard />
+  }
 ]);
 
 export default router;
