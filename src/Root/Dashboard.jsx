@@ -4,11 +4,11 @@ import { MdPostAdd } from "react-icons/md";
 import { BsPostcardHeartFill } from "react-icons/bs";
 
 const Dashboard = () => {
-  const admin = false;
+  const admin = true;
 
   return (
-    <div className="lg: flex">
-      <div className="w-80 bg-purple-400 h-screen p-4">
+    <div className="lg:flex">
+      <div className="lg:w-80 bg-purple-400 lg:h-screen p-4">
         {admin ? (
           <>
             <NavLink to="/dashboard">
@@ -25,14 +25,14 @@ const Dashboard = () => {
               </button>
             </NavLink>
 
-            <NavLink to="/dashboard/manageUsers">
+            <NavLink to="/dashboard/manage-users">
               <button className="btn w-full mt-8">
                 <FaUsers />
                 Manage Users
               </button>
             </NavLink>
 
-            <NavLink to="/dashboard/my-posts">
+            <NavLink to="/dashboard/posts">
               <button className="btn w-full mt-8">
                 <BsPostcardHeartFill />
                 My Posts
@@ -52,13 +52,6 @@ const Dashboard = () => {
               <button className="btn w-full mt-8">
                 <MdPostAdd />
                 Dashboard
-              </button>
-            </NavLink>
-
-            <NavLink to="/dashboard/my-posts">
-              <button className="btn w-full mt-8">
-                <BsPostcardHeartFill />
-                My Posts
               </button>
             </NavLink>
 

@@ -26,7 +26,7 @@ const Home = () => {
           <p>Name: {user.userInformation?.name}</p>
           <p>Email: {user.userInformation?.email}</p>
           <p>Role: {user.userInformation?.role}</p>
-          <img src={user.userInformation?.image} alt="User" />
+          {/* <img src={user.userInformation?.image} alt="User" /> */}
         </div>
       )}
     </div>

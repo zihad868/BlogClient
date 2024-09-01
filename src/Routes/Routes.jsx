@@ -8,7 +8,8 @@ import Signin from "../Components/Authentication/Signin/Signin";
 import Signup from "../Components/Authentication/Signup/Signup";
 import Dashboard from "../Root/Dashboard";
 import AddPost from "../Pages/DashBoard/AddPost";
-import MyPost from "../Pages/DashBoard/MyPost";
+import Post from "../Pages/DashBoard/Post";
+import ManageUsers from "../Pages/DashBoard/ManageUsers";
 
 const router = createBrowserRouter([
 
@@ -52,12 +53,16 @@ const router = createBrowserRouter([
         element: <AddPost />
       },
       {
-        path: '/dashboard/my-posts',
-        element: <MyPost />
+        path: '/dashboard/posts',
+        element: <Post />
       },
       {
         path: '/dashboard/my-profile',
-        element: <MyPost />
+        element: <Post />
+      },
+      {
+        path: '/dashboard/manage-users',
+        element: <ManageUsers />
       },
     ]
   }
