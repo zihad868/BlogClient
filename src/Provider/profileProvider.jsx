@@ -9,7 +9,11 @@ const ProfileProvider = ({ children }) => {
   const { email, loading } = useContext(UserContext);
 
   const token = localStorage.getItem("authorization");
-  console.log(token);
+  
+
+  const handleLogout = () => {
+    localStorage.removeItem('authorization');
+  }
 
   const fetchUser = async () => {
     try {
@@ -40,7 +44,7 @@ const ProfileProvider = ({ children }) => {
   const {userInformation: user} = userObject;
 
 
-  const userProfile = { user, isLoading, isError };
+  const userProfile = { user, isLoading, isError, handleLogout };
 
   return (
     <UserProvider.Provider value={userProfile}>

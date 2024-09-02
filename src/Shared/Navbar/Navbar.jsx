@@ -1,9 +1,20 @@
 import React, { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserProvider } from "../../Provider/profileProvider";
 
 const Navbar = () => {
-  const { user, isLoading, isError } = useContext(UserProvider);
+  const navigate = useNavigate();
+  const { user, isLoading, isError, handleLogout } = useContext(UserProvider);
+
+
+  const logOut = () => {
+    handleLogout();
+    setTimeout(() =>{
+      navigate('/authentication/signin');
+      window.location.reload();
+    },1000)
+  }
+
 
   const nav = (
     <div className="mr-5">
@@ -61,6 +72,7 @@ const Navbar = () => {
             <Link to="/dashboard" className="btn">
               Dashboard
             </Link>
+            <button onClick={logOut}>Log-Out</button>
             </>
           ) : (
             <Link to="/authentication" className="btn">
