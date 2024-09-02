@@ -11,8 +11,8 @@ const ProfileProvider = ({ children }) => {
   const token = localStorage.getItem("authorization");
   
 
-  const handleLogout = () => {
-    localStorage.removeItem('authorization');
+  const handleLogout = async() => {
+    localStorage.removeItem('authorization')
   }
 
   const fetchUser = async () => {
