@@ -73,7 +73,7 @@ const Dashboard = () => {
           </button>
         </NavLink>
       </div>
-      <div>
+      <div className="w-full">
         <Outlet />
       </div>
     </div>
