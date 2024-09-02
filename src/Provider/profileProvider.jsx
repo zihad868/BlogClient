@@ -31,11 +31,14 @@ const ProfileProvider = ({ children }) => {
   
   
 
-  const { data: user = {}, isLoading, isError } = useQuery({
+  const { data: userObject = {}, isLoading, isError } = useQuery({
     queryKey: ["user"],
     queryFn: fetchUser,
     enabled: !loading && !!email,
   });
+
+  const {userInformation: user} = userObject;
+
 
   const userProfile = { user, isLoading, isError };
 

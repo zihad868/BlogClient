@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const[loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     const token = localStorage.getItem("authorization");
     if (token) {
@@ -23,7 +24,7 @@ const AuthProvider = ({ children }) => {
     
   }, [email]);
 
-  const userInfo = { email, loading };
+  const userInfo = { email, loading};
   console.log(loading,email)
 
   return (

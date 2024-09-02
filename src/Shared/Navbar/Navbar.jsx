@@ -56,7 +56,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          {user.userInformation?.name ? (
+          {user?.name ? (
             <>
             <Link to="/dashboard" className="btn">
               Dashboard

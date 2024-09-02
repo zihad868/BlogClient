@@ -23,9 +23,9 @@ const Home = () => {
       <h3 className="">Home</h3>
       {user && (
         <div>
-          <p>Name: {user.userInformation?.name}</p>
-          <p>Email: {user.userInformation?.email}</p>
-          <p>Role: {user.userInformation?.role}</p>
+          <p>Name: {user?.name}</p>
+          <p>Email: {user?.email}</p>
+          <p>Role: {user?.role}</p>
           {/* <img src={user.userInformation?.image} alt="User" /> */}
         </div>
       )}
