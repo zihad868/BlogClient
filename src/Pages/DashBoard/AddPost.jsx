@@ -16,7 +16,7 @@ const AddPost = () => {
   const [userObj, isLoading, error] = useUser();
   const { userInformation: user } = userObj;
 
-  console.log(user);
+  // console.log(user);
   const {
     register,
     handleSubmit,
@@ -24,10 +24,9 @@ const AddPost = () => {
     formState: { errors },
   } = useForm();
 
-
   const onSubmit = async (data) => {
-    console.log("data-->",data);
-  }
+    console.log("data-->", data);
+  };
 
   return (
     <div>
@@ -72,54 +71,43 @@ const AddPost = () => {
             )}
           </div>
 
-          <div className="mt-4">
-            <label
-              className="block mb-2 text-sm font-medium text-gray-600"
-              htmlFor="tag"
-            >
-              Select Tag
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Select Category</span>
             </label>
-            <Controller
-              name="tag"
-              control={control}
-              defaultValue={null}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={options}
-                  onChange={(selectedOption) => field.onChange(selectedOption)}
-                />
-              )}
-              rules={{ required: true }}
-            />
-            {errors.tag && (
-              <span className="text-red-500">Tag field is required</span>
-            )}
+            <select className="border-2" {...register("category")}>
+              <option value="JavaScript">JavaScript</option>
+              <option value="React">React</option>
+              <option value="Python">Python</option>
+            </select>
           </div>
 
-          <div className="mt-4">
-            <div className="flex justify-between">
-              <label
-                className="block mb-2 text-sm font-medium text-gray-600 "
-                htmlFor="loggingPassword"
-              >
-                Upload Your Image
-              </label>
-            </div>
-
-            <br />
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Upload Image</span>
+            </label>
             <input
-              {...register("image")}
               type="file"
-              className="file-input w-full max-w-xs"
+              className="file:border file:border-solid"
+              {...register("image")}
             />
-            <br />
+          </div>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Upload Another Image</span>
+            </label>
+            <input
+              type="file"
+              className="file:border file:border-solid"
+              {...register("image2")}
+            />
           </div>
 
           <div className="mt-6">
             <button
               type="submit"
-              className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+              className="btn w-full px-6 py-3 text-sm font-bold tracking-wide text-white capitalize transition-colors duration-300 transform bg-purple-600 rounded-lg hover:bg-teal-600 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
             >
               Create Post
             </button>
