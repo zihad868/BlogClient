@@ -39,7 +39,7 @@ const Dashboard = () => {
               </button>
             </NavLink>
 
-            <NavLink to="/dashboard/myProfile">
+            <NavLink to="/dashboard/my-profile">
               <button className="btn w-full mt-8">
                 <FaUsers />
                 My Profile

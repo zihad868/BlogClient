@@ -10,6 +10,7 @@ import Dashboard from "../Root/Dashboard";
 import AddPost from "../Pages/DashBoard/AddPost";
 import Post from "../Pages/DashBoard/Post";
 import ManageUsers from "../Pages/DashBoard/ManageUsers";
+import MyProfile from '../Pages/DashBoard/MyProfile';
 
 const router = createBrowserRouter([
 
@@ -57,13 +58,13 @@ const router = createBrowserRouter([
         element: <Post />
       },
       {
-        path: '/dashboard/my-profile',
-        element: <Post />
-      },
-      {
         path: '/dashboard/manage-users',
         element: <ManageUsers />
       },
+      {
+        path: '/dashboard/my-profile',
+        element: <MyProfile />
+      }
     ]
   }
 ]);
