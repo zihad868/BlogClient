@@ -1,20 +1,18 @@
 import { Controller, useForm } from "react-hook-form";
 import SectionTitle from "../../Shared/SectionTitle/SectionTitle";
 import useUser from "../../UseHook/useUser";
-import Select from "react-select";
+import { handleError } from "../../utils";
+import { ToastContainer } from "react-toastify";
+import { useState } from "react";
+import useAxiosSecure from "../../UseHook/useAxiosSecure";
 
-const options = [
-  { value: "javascript", label: "JavaScript" },
-  { value: "react", label: "React" },
-  { value: "python", label: "Python" },
-  { value: "django", label: "Django" },
-  { value: "flask", label: "Flask" },
-  { value: "ruby", label: "Ruby" },
-];
+import { useQuery } from "@tanstack/react-query";
 
 const AddPost = () => {
   const [userObj, isLoading, error] = useUser();
   const { userInformation: user } = userObj;
+
+  const axiosSecure = useAxiosSecure();
 
   // console.log(user);
   const {
@@ -25,7 +23,66 @@ const AddPost = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("data-->", data);
+    const { image, image2, title, description, category } = data;
+
+    if (!navigator.onLine) {
+      handleError(
+        "No internet connection. Please check your connection and try again."
+      );
+      return;
+    }
+
+    try {
+      let imgURL = "";
+      let imgURL2 = "";
+
+      // Upload 1st Image
+      const formData = new FormData();
+      formData.append("image", image[0]);
+      if (image?.length) {
+        const response = await fetch(`${import.meta.env.VITE_IMAGEBB_API}`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+        const imageLink = result?.data?.display_url;
+        imgURL = imageLink;
+      }
+
+      // Upload 2nd Image
+      const formData2 = new FormData();
+      formData2.append("image", image2[0]);
+      if (image2?.length) {
+        const response = await fetch(`${import.meta.env.VITE_IMAGEBB_API}`, {
+          method: "POST",
+          body: formData2,
+        });
+
+        const result = await response.json();
+        const imageLink = result?.data?.display_url;
+        imgURL2 = imageLink;
+      }
+
+      const postInfo = {
+        authName: user?.name,
+        authEmail: user?.email,
+        authImg: user?.image,
+        title,
+        description,
+        category,
+        postImg: imgURL,
+        postImg2: imgURL2,
+      };
+
+      const res = await axiosSecure.post(`/api/post`, postInfo);
+
+      console.log("Post --->", res);
+      console.log("image-->", imgURL, imgURL2);
+    } catch (error) {
+      console.log("Error->", error);
+      handleError(error.message || "Internal Server Error");
+    }
   };
 
   return (
@@ -114,6 +171,7 @@ const AddPost = () => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };
