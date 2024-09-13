@@ -71,11 +71,11 @@ const AddPost = () => {
         title,
         description,
         category,
-        postImg: imgURL,
-        postImg2: imgURL2,
+        postImg: imgURL|| '',
+        postImg2: imgURL2|| '',
       };
 
-      const res = await axiosSecure.post(`/api/post`, postInfo);
+      const res = await axiosSecure.post(`/api/post/`, postInfo);
 
       console.log("Post --->", res);
       console.log("image-->", imgURL, imgURL2);
