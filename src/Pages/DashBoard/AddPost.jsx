@@ -1,16 +1,18 @@
 import { Controller, useForm } from "react-hook-form";
 import SectionTitle from "../../Shared/SectionTitle/SectionTitle";
 import useUser from "../../UseHook/useUser";
-import { handleError } from "../../utils";
+import { handleError, handleSuccess } from "../../utils";
 import { ToastContainer } from "react-toastify";
 import { useState } from "react";
 import useAxiosSecure from "../../UseHook/useAxiosSecure";
 
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const AddPost = () => {
   const [userObj, isLoading, error] = useUser();
   const { userInformation: user } = userObj;
+  const navigate = useNavigate();
 
   const axiosSecure = useAxiosSecure();
 
@@ -70,14 +72,27 @@ const AddPost = () => {
         authImg: user?.image,
         title,
         description,
-        category,
-        postImg: imgURL|| '',
-        postImg2: imgURL2|| '',
+        category
       };
+
+      if(imgURL){
+         postInfo.postImg = imgURL;
+      }
+
+      if(imgURL2){
+        postInfo.postImg2 = imgURL2;
+      }
 
       const res = await axiosSecure.post(`/api/post/`, postInfo);
 
-      console.log("Post --->", res);
+      if (res?.data?.success) {
+        handleSuccess("Create Post Success");
+        setTimeout(()=> {
+          navigate('/');
+        }, 2000)
+      }else{
+        handleError('Create Post Failed');
+      }
       console.log("image-->", imgURL, imgURL2);
     } catch (error) {
       console.log("Error->", error);
