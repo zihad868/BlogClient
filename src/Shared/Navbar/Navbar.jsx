@@ -1,87 +1,33 @@
-import React, { useContext } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { UserProvider } from "../../Provider/profileProvider";
+import React from "react";
+import logo from "../../assets/Logo/logo.jpg";
+import { Link } from "react-router-dom";
+import NavLinks from "./NavLinks";
+import Button from "./Button";
 
 const Navbar = () => {
-  const navigate = useNavigate();
-  const { user, isLoading, isError, handleLogout } = useContext(UserProvider);
-
-
-  const logOut = () => {
-    handleLogout();
-    setTimeout(() =>{
-      navigate('/authentication/signin');
-      window.location.reload();
-    },1000)
-  }
-
-
-  const nav = (
-    <div className="mr-5">
-      <NavLink className="mr-5" to="/">
-        Home
-      </NavLink>
-      <NavLink className="mr-5" to="/">
-        About
-      </NavLink>
-      <NavLink className="mr-5" to="/">
-        Contact
-      </NavLink>
-    </div>
-  );
   return (
-    <div>
-      <div className="navbar bg-base-200">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              {/* Small Device */}
-              {nav}
-            </ul>
+    <nav>
+      <div className="bg-white">
+        <div className="flex items-center font-medium justify-around">
+          <div className="flex items-center gap-2">
+            <img src={logo} alt="" className="md:cursor-pointer w-16 h-9" />
+            <h2 className="text-xl">Logo</h2>
           </div>
-          <a className="text-xl">Marketing Blog</a>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {/* Large Device */}
-            {nav}
+          <ul className="md:flex hidden uppercase items-center gap-8 font-[Poppins]">
+            <li>
+              <Link to="/" className="py-7 px-3 inline-block">
+                Home
+              </Link>
+            </li>
+            <NavLinks />
           </ul>
-        </div>
-        <div className="navbar-end">
-          {user?.name ? (
-            <>
-            <Link to="/dashboard" className="btn">
-              Dashboard
-            </Link>
-            <button onClick={logOut}>Log-Out</button>
-            </>
-          ) : (
-            <Link to="/authentication" className="btn">
-              Sign In
-            </Link>
-          )}
+
+          <div className="md:block hidden">
+            <Button />
+          </div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
